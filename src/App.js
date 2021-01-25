@@ -108,9 +108,9 @@ function App(props) {
 								Persentase orang yang perlu memiliki antibodi untuk mencapai
 								<i> herd immunity</i> terhadap suatu penyakit berbeda-beda dari
 								satu penyakit ke penyakit lain. Sebagai contoh, untuk mencapai
-								<i> herd immunity</i> terhadap campak, sekitar 95% populasi
-								harus diimunisasi. 5% penduduk lain akan terlindungi karena
-								campak tidak akan menyebar di antara orang-orang yang
+								<i> herd immunity</i> terhadap campak, sekitar <b>95%</b>{' '}
+								populasi harus diimunisasi. 5% penduduk lain akan terlindungi
+								karena campak tidak akan menyebar di antara orang-orang yang
 								diimunisasi.
 							</p>
 							<p className="text-gray-400 mt-2 ">
@@ -125,8 +125,8 @@ function App(props) {
 								</a>
 							</p>
 							<p className="font-normal text-lg mt-2 leading-relaxed">
-								Saya mengambil contoh dari campak yaitu 95% populasi harus
-								divaksinasi atau imun terhadap covid.
+								Saya mengambil contoh dari campak yaitu <b>95%</b> populasi
+								harus divaksinasi atau imun terhadap covid.
 							</p>
 						</div>
 						<div className="flex-1 md:my-auto md:my-10 my-20  ">
