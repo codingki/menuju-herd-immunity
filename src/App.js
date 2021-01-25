@@ -17,10 +17,6 @@ function App(props) {
 	const pendudukIndonesia = 271349889;
 
 	useEffect(() => {
-		getCovidData();
-	}, []);
-
-	function getCovidData() {
 		fetch(`https://covid19.mathdro.id/api/countries/Indonesia`)
 			.then((res) => res.json())
 			.then((data) => {
@@ -32,7 +28,7 @@ function App(props) {
 				console.log(err);
 				setTotalCase('Error');
 			});
-	}
+	}, []);
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -123,6 +119,7 @@ function App(props) {
 									className="font-semibold hover:underline"
 									href="https://www.who.int/indonesia/news/novel-coronavirus/qa/qa-lockdown-and-herd-immunity"
 									target="_blank"
+									rel="noopener noreferrer"
 								>
 									WHO
 								</a>
@@ -150,6 +147,7 @@ function App(props) {
 											href="https://github.com/mathdroid/covid-19-api"
 											className="font-semibold hover:underline"
 											target="_blank"
+											rel="noopener noreferrer"
 										>
 											Mathdroid covid-19 API
 										</a>{' '}
@@ -186,6 +184,7 @@ function App(props) {
 											className="font-semibold hover:underline"
 											href="https://dukcapil.kemendagri.go.id/berita/baca/642/cetak-sejarah-jumlah-penduduk-2020-versi-bps-dan-kemendagri-sama"
 											target="_blank"
+											rel="noopener noreferrer"
 										>
 											Kemendagri (Desember 2020)
 										</a>
@@ -262,6 +261,7 @@ function App(props) {
 										href={vax.link}
 										style={{ color: '#20BFA9' }}
 										target="_blank"
+										rel="noopener noreferrer"
 									>
 										{vax.sumber}
 									</a>
@@ -284,6 +284,7 @@ function App(props) {
 						className="font-medium text-center "
 						href="https://twitter.com/kikiding"
 						target="_blank"
+						rel="noopener noreferrer"
 						style={{ color: '#20BFA9' }}
 					>
 						@kikiding
@@ -293,6 +294,7 @@ function App(props) {
 					className="font-medium text-center "
 					href="https://karyakarsa.com/kikiding"
 					target="_blank"
+					rel="noopener noreferrer"
 					style={{ color: '#20BFA9' }}
 				>
 					🙌 Dukung!

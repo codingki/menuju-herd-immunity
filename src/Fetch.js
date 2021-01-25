@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useQuery } from 'graphql-hooks';
 import App from './App';
 const VAKSINQUERY = `query VAKSINQUERY {
