@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import moment from 'moment';
+import KandidatVaksin from './components/KandidatVaksin';
+import Phase from './components/Phase';
 var _ = require('lodash');
 
 function App(props) {
@@ -10,11 +12,18 @@ function App(props) {
 	// const [totalVaksin, setTotalVaksin] = useState(0);
 
 	const dataVax = props.dataVaksin.allVaksins;
+	const distribusiVax = props.dataVaksin.allDistribusiVaksins;
+	const penelitianVax = props.dataVaksin.penelitianVaksin;
+	const kandidatVax = props.dataVaksin.allKandidatVaksins;
 	const totalVaksin = _.sumBy(dataVax, function (o) {
 		return o.jumlah;
 	});
+	const totalDistribusiVaksin = _.sumBy(distribusiVax, function (o) {
+		return o.jumlah;
+	});
 
-	const pendudukIndonesia = 271349889;
+	const populasiIndonesia = 271349889;
+	const targetVaksinasi = 181554465;
 
 	useEffect(() => {
 		fetch(`https://covid19.mathdro.id/api/countries/Indonesia`)
@@ -35,15 +44,15 @@ function App(props) {
 	}
 
 	function countHI() {
-		const totalImun = countTotalCase + totalVaksin;
-		const percentage = totalImun / pendudukIndonesia;
+		const totalImun = countTotalCase + totalDistribusiVaksin;
+		const percentage = totalImun / targetVaksinasi;
 		return percentage * 100;
 	}
 
 	return (
 		<>
 			<div id="home" className="bg-bg flex h-screen flex-col ">
-				<div className="container max-w-screen-lg m-auto text-center px-2">
+				<div className="container max-w-screen-lg m-auto text-center px-5 md:px-20">
 					<h1 className="text-gray-200 text-xl md:text-4xl  font-medium">
 						Indonesia
 					</h1>
@@ -71,7 +80,7 @@ function App(props) {
 						</div>
 					</div>
 					<div className="text-center mx-auto ">
-						<p className="font-medium text-center text-gray-400">
+						<p className="font-medium text-center text-gray-400 text-sm">
 							Disclaimer: Data ini tidak 100% valid
 						</p>
 						<AnchorLink
@@ -88,7 +97,7 @@ function App(props) {
 				id="data"
 				className="bg-bg flex md:h-screen h-auto sm:py-20 flex-col"
 			>
-				<div className="container-small m-auto max-w-screen-lg  px-5">
+				<div className="container-small m-auto max-w-screen-lg  px-5  ">
 					<div className="flex gap-6 flex-col  md:flex-row ">
 						<div
 							className="p-6 rounded-xl text-gray-200 flex-1 "
@@ -111,7 +120,7 @@ function App(props) {
 								<i> herd immunity</i> terhadap campak, sekitar <b>95%</b>{' '}
 								populasi harus diimunisasi. 5% penduduk lain akan terlindungi
 								karena campak tidak akan menyebar di antara orang-orang yang
-								diimunisasi.
+								diimunisasi. Untuk polio, ambangnya adalah sekitar 80%.
 							</p>
 							<p className="text-gray-400 mt-2 ">
 								sumber:{' '}
@@ -125,8 +134,19 @@ function App(props) {
 								</a>
 							</p>
 							<p className="font-normal text-lg mt-2 leading-relaxed">
-								Saya mengambil contoh dari campak yaitu <b>95%</b> populasi
-								harus divaksinasi atau imun terhadap covid.
+								Indonesia menargetkan ±66,9% dari total populasi yaitu
+								181,554,465.
+							</p>
+							<p className="text-gray-400 mt-2 ">
+								sumber:{' '}
+								<a
+									className="font-semibold hover:underline"
+									href="https://twitter.com/KemenkesRI/status/1352621085393440771"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									@KemenkesRI
+								</a>
 							</p>
 						</div>
 						<div className="flex-1 md:my-auto md:my-10 my-20  ">
@@ -176,7 +196,7 @@ function App(props) {
 										className="font-bold text-4xl my-2"
 										style={{ color: '#4186EE' }}
 									>
-										±{numberWithCommas(pendudukIndonesia)}
+										±{numberWithCommas(populasiIndonesia)}
 									</p>
 									<p className="text-gray-500">
 										sumber:{' '}
@@ -192,20 +212,101 @@ function App(props) {
 								</div>
 								<div className="">
 									<p className="font-semibold text-xl text-white">
-										Untuk menuju <i>herd immunity</i>
+										Total sasaran vaksinasi
 									</p>
 									<p
 										className="font-bold text-4xl my-2"
 										style={{ color: '#FFB800' }}
 									>
-										±{numberWithCommas(Math.ceil(pendudukIndonesia * 0.95))}
+										±{numberWithCommas(targetVaksinasi)}
 									</p>
-									<p className="text-white">
-										orang harus imun terhadap covid atau divaksinasi
+									<p className="text-gray-500">
+										sumber:{' '}
+										<a
+											className="font-semibold hover:underline"
+											href="https://twitter.com/KemenkesRI/status/1352621085393440771"
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											@KemenkesRI
+										</a>
 									</p>
 								</div>
 							</div>
 						</div>
+					</div>
+					<div className="mx-auto text-center m-10">
+						<p className="font-semibold text-xl text-white">
+							Orang yang telah divaksinasi
+						</p>
+						<p className="font-bold text-4xl my-2" style={{ color: '#FFF' }}>
+							±{numberWithCommas(totalDistribusiVaksin)}
+						</p>
+						<p className="text-gray-500">
+							sumber: Diambil dari berbagai sumber
+						</p>
+					</div>
+				</div>
+				<div className="text-center mx-auto ">
+					<AnchorLink
+						className="text-lg font-bold "
+						href="#distribusi"
+						style={{ color: '#20BFA9' }}
+					>
+						Distribusi Vaksin
+					</AnchorLink>
+				</div>
+			</div>
+			<div
+				id="distribusi"
+				className="bg-bg flex  h-auto sm:py-20 py-10 flex-col min-h-screen "
+			>
+				<div className="container-small m-auto max-w-screen-lg  px-5">
+					<h1 className="font-bold text-2xl md:text-4xl text-gray-100 text-center">
+						Distribusi Vaksin
+					</h1>
+					<p className="text-center text-gray-300 font-medium text-lg mt-2">
+						Jumlah orang yang sudah divaksinasi di Indonesia (diambil dari
+						berbagai sumber)
+					</p>
+
+					<div className="flex flex-col mt-10">
+						{distribusiVax.map((vax, index) => (
+							<div className="p-1" key={vax.id}>
+								{index !== 0 && (
+									<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
+								)}
+								{index > 0 && (
+									<div
+										className="h-20 w-1 mx-auto rounded"
+										style={{ backgroundColor: '#232228' }}
+									/>
+								)}
+
+								<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
+								<p className="font-semibold text-lg mt-2 text-center text-gray-200">
+									{vax.judul}
+								</p>
+								<p className="font-bold sm:text-6xl text-center text-white text-4xl">
+									{numberWithCommas(vax.jumlah)}
+								</p>
+								<p className="font-normal text-lg text-center text-gray-400 mt-2">
+									{moment(vax.tanggal).format('DD-MM-YYYY')}
+								</p>
+								<p className="font-normal text-md text-center text-gray-500">
+									sumber:{' '}
+									<a
+										className="text-lg font-medium "
+										href={vax.link}
+										style={{ color: '#20BFA9' }}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{vax.sumber}
+									</a>
+								</p>
+							</div>
+						))}
 					</div>
 				</div>
 				<div className="text-center mx-auto ">
@@ -214,17 +315,17 @@ function App(props) {
 						href="#vaksin"
 						style={{ color: '#20BFA9' }}
 					>
-						Jumlah Vaksin
+						Ketersediaan Vaksin
 					</AnchorLink>
 				</div>
 			</div>
 			<div
 				id="vaksin"
-				className="bg-bg flex  h-auto sm:py-20 flex-col min-h-screen "
+				className="bg-bg flex  h-auto sm:py-20 py-10 flex-col min-h-screen "
 			>
 				<div className="container-small m-auto max-w-screen-lg  px-5">
 					<h1 className="font-bold text-2xl md:text-4xl text-gray-100 text-center">
-						Jumlah Vaksin
+						Ketersediaan Vaksin
 					</h1>
 					<p className="text-center text-gray-300 font-medium text-lg mt-2">
 						Jumlah dosis vaksin yang tersedia di Indonesia (diambil dari
@@ -252,7 +353,7 @@ function App(props) {
 									{numberWithCommas(vax.jumlah)}
 								</p>
 								<p className="font-normal text-lg text-center text-gray-400 mt-2">
-									{vax.tanggal}
+									{moment(vax.tanggal).format('DD-MM-YYYY')}
 								</p>
 								<p className="font-normal text-md text-center text-gray-500">
 									sumber:{' '}
@@ -269,6 +370,127 @@ function App(props) {
 							</div>
 						))}
 					</div>
+				</div>
+				<div className="text-center mx-auto ">
+					<AnchorLink
+						className="text-lg font-bold "
+						href="#penelitian"
+						style={{ color: '#20BFA9' }}
+					>
+						Penelitian Vaksin
+					</AnchorLink>
+				</div>
+			</div>
+			<div
+				id="penelitian"
+				className="bg-bg flex h-screen sm:py-20 py-10 flex-col "
+			>
+				<div className="container m-auto max-w-screen-lg  px-5  ">
+					<h1 className="font-bold text-2xl md:text-4xl text-gray-100 text-center">
+						Penelitian Vaksin Dunia
+					</h1>
+					<p className="text-center text-gray-500 font-medium text-lg mt-2">
+						Dikumpulkan dari bing.com/covid (last update on{' '}
+						{moment(penelitianVax.lastUpdate).format('DD-MM -YYYY')})
+					</p>
+					<div className="flex flex-row  my-10">
+						<Phase
+							phase="Preclinical"
+							desc="Not yet in human trials"
+							color="898989"
+							number={penelitianVax.preclinical}
+						/>
+						<Phase
+							phase="Phase I"
+							desc="Not yet in human trials"
+							color="FF6B00"
+							number={penelitianVax.phase1}
+						/>
+						<Phase
+							phase="Phase II"
+							desc="Extended safety trials"
+							color="E1D800"
+							number={penelitianVax.phase2}
+						/>
+						<Phase
+							phase="Phase III"
+							desc="Large-scale trials"
+							color="0076CB"
+							number={penelitianVax.phase3}
+						/>
+						<Phase
+							phase="Limited Approval"
+							desc="Approved for limited use"
+							color="9900CF"
+							number={penelitianVax.limitedApproval}
+						/>
+					</div>
+					<div className="flex flex-row  my-10">
+						<Phase
+							phase="Approved"
+							desc="Approved for human use"
+							color="45EE41"
+							number={penelitianVax.approved}
+						/>
+					</div>
+				</div>
+				<div className="text-center mx-auto ">
+					<AnchorLink
+						className="text-lg font-bold "
+						href="#kandidat"
+						style={{ color: '#20BFA9' }}
+					>
+						Kandidat Vaksin
+					</AnchorLink>
+				</div>
+			</div>
+			<div
+				id="kandidat"
+				className="bg-bg flex min-h-screen h-auto sm:py-20 flex-col"
+			>
+				<div className="container m-auto max-w-screen-lg  px-5  ">
+					<h1 className="font-bold text-2xl md:text-4xl text-gray-100 text-center">
+						Kandidat Vaksin Teratas
+					</h1>
+					<p className="text-center text-gray-500 font-medium text-lg mt-2 mb-10">
+						Dikumpulkan dari bing.com/covid (last update on{' '}
+						{moment(penelitianVax.lastUpdate).format('DD-MM -YYYY')})
+					</p>
+
+					<div
+						className="py-2 px-6 pb-6 rounded-xl text-gray-200 "
+						style={{ backgroundColor: '#232228' }}
+					>
+						<table className="table-auto min-w-full">
+							<thead>
+								<tr>
+									<th className=" text-semibold text-left py-4 whitespace-no-wrap border-b-2 border-gray-200 ">
+										Phase
+									</th>
+									<th className=" text-semibold text-left py-4 whitespace-no-wrap border-b-2 border-gray-200 ">
+										Developed by
+									</th>
+									<th className="text-semibold text-left py-4 whitespace-no-wrap border-b-2 border-gray-200 ">
+										Type
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{kandidatVax.map((item) => (
+									<KandidatVaksin data={item} />
+								))}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div className="text-center mx-auto mt-10 ">
+					<AnchorLink
+						className="text-lg font-bold "
+						href="#home"
+						style={{ color: '#20BFA9' }}
+					>
+						Back to top
+					</AnchorLink>
 				</div>
 			</div>
 			<div

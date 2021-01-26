@@ -11,6 +11,30 @@ const VAKSINQUERY = `query VAKSINQUERY {
 	deskripsi
 	title
 	}
+	allDistribusiVaksins(orderBy: tanggal_ASC) {
+		id
+		judul
+		jumlah
+		link
+		sumber
+		tanggal
+	  }
+	  penelitianVaksin {
+		limitedApproval
+		phase1
+		phase2
+		phase3
+		preclinical
+		approved
+		lastUpdate
+	  }
+	  allKandidatVaksins(orderBy: faseStatus_DESC) {
+		id
+		tipeVaksin
+		dibuatOleh
+		fase
+		faseStatus
+	  }
 }`;
 
 function Fetch() {

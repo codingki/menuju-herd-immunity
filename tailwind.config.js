@@ -17,6 +17,7 @@ module.exports = {
 			transparent: 'transparent',
 			current: 'currentColor',
 			bg: '#060508',
+			hoverBg: '#2E2E32',
 			black: colors.black,
 			white: colors.white,
 			gray: colors.coolGray,
