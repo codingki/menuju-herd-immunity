@@ -23,18 +23,19 @@ function KandidatVaksin(props) {
 
 	return (
 		<tr className="hover:bg-hoverBg">
-			<td
-				className="px-2 py-4 whitespace-no-wrap border-b border-gray-500 text-medium"
-				style={{
-					color: color(data.faseStatus),
-				}}
-			>
+			<td className="px-2 py-4 whitespace-no-wrap border-b flex flex-row   border-gray-500 ">
+				<div
+					className="rounded-full h-2 w-2 my-auto mr-2"
+					style={{
+						backgroundColor: color(data.faseStatus),
+					}}
+				></div>
 				{data.fase}
 			</td>
-			<td className="px-2 py-4 whitespace-no-wrap border-b border-gray-500">
+			<td className="px-2 py-4 whitespace-no-wrap border-b   border-gray-500">
 				{data.dibuatOleh}
 			</td>
-			<td className="px-2 py-4 whitespace-no-wrap border-b border-gray-500">
+			<td className="px-2 py-4 whitespace-no-wrap border-b   border-gray-500">
 				{data.tipeVaksin}
 			</td>
 		</tr>

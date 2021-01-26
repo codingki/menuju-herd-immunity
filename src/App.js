@@ -458,10 +458,10 @@ function App(props) {
 					</p>
 
 					<div
-						className="py-2 px-6 pb-6 rounded-xl text-gray-200 "
+						className="py-2 px-6 pb-6 rounded-xl text-gray-200 overflow-auto "
 						style={{ backgroundColor: '#232228' }}
 					>
-						<table className="table-auto min-w-full">
+						<table className="table-auto min-w-full whitespace-nowrap">
 							<thead>
 								<tr>
 									<th className=" text-semibold text-left py-4 whitespace-no-wrap border-b-2 border-gray-200 ">
