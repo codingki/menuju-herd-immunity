@@ -11,14 +11,14 @@ const VAKSINQUERY = `query VAKSINQUERY {
 	deskripsi
 	title
 	}
-	allDistribusiVaksins(orderBy: tanggal_ASC) {
+	allDistribusiVaksins(orderBy: id_ASC) {
 		id
 		judul
 		jumlah
 		link
 		deskripsi
 		sumber
-		tanggal
+		bulan
 	  }
 	  penelitianVaksin {
 		limitedApproval

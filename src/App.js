@@ -9,47 +9,54 @@ const cheerio = require('cheerio');
 
 function App(props) {
 	const [totalCase, setTotalCase] = useState(0);
+	const [recovered, setRecovered] = useState(0);
 	const [countTotalCase, setCountTotalCase] = useState(0);
 	const [lastUpdate, setLastUpdate] = useState('-');
+	const [totalDivaksin, setTotalDivaksin] = useState(0);
+	const [dateDivaksin, setDateDivaksin] = useState('');
+
 	// const [totalVaksin, setTotalVaksin] = useState(0);
 
 	const dataVax = props.dataVaksin.allVaksins;
 	const distribusiVax = props.dataVaksin.allDistribusiVaksins;
 	const penelitianVax = props.dataVaksin.penelitianVaksin;
 	const kandidatVax = props.dataVaksin.allKandidatVaksins;
+
 	const totalVaksin = _.sumBy(dataVax, function (o) {
 		return o.jumlah;
 	});
-	const totalDistribusiVaksin = _.sumBy(distribusiVax, function (o) {
-		return o.jumlah;
-	});
+	// const totalDistribusiVaksin = _.sumBy(distribusiVax, function (o) {
+	// 	return o.jumlah;
+	// });
 
 	const populasiIndonesia = 271349889;
 	const targetVaksinasi = 181554465;
 
-	useEffect(async () => {
+	useEffect(() => {
 		fetch(`https://covid19.mathdro.id/api/countries/Indonesia`)
 			.then((res) => res.json())
 			.then((data) => {
 				setCountTotalCase(data.confirmed.value);
 				setLastUpdate(data.lastUpdate);
 				setTotalCase(numberWithCommas(data.confirmed.value));
+				setRecovered(data.recovered.value);
 			})
 			.catch((err) => {
 				console.log(err);
 				setTotalCase('Error');
 			});
-		const item = await fetchHTML();
-		const divaksin = item.split('Divaksin:');
-		const clear = divaksin[1].replace('.', '');
-		const res = parseInt(clear);
-		console.log(res);
+
+		fetchFromKemkes();
 	}, []);
 
-	async function fetchHTML() {
-		const cors = 'https://cors-anywhere.herokuapp.com/';
-		const { data } = await axios.get(cors + 'https://www.kemkes.go.id/');
+	async function fetchFromKemkes() {
+		//const cors = 'https://cors-anywhere.herokuapp.com/';
+		const { data } = await axios.get('https://www.kemkes.go.id/');
 		const $ = cheerio.load(data);
+		let result = [];
+		const date = $('li.info-date').text();
+		const clearDate = date.split('Kondisi ');
+		setDateDivaksin(clearDate[1]);
 
 		const info = $('li.info-case')
 			.map((i, el) => {
@@ -57,7 +64,11 @@ function App(props) {
 				return many.text();
 			})
 			.get(1);
-		return info;
+
+		const divaksin = info.split('Divaksin:');
+		const clear = divaksin[1].replace('.', '');
+		const res = parseInt(clear);
+		setTotalDivaksin(res);
 	}
 
 	function numberWithCommas(x) {
@@ -65,7 +76,7 @@ function App(props) {
 	}
 
 	function countHI() {
-		const totalImun = countTotalCase + totalDistribusiVaksin;
+		const totalImun = recovered + totalDivaksin;
 		const percentage = totalImun / targetVaksinasi;
 		return percentage * 100;
 	}
@@ -81,7 +92,7 @@ function App(props) {
 						className="text-4xl md:text-7xl  font-bold m-1 md:m-3 "
 						style={{ color: '#20BFA9' }}
 					>
-						{countHI().toFixed(4)} %
+						{totalDivaksin == 0 ? 'Calculating..' : countHI().toFixed(4) + ' %'}
 					</p>
 					<p className="text-gray-200 text-xl md:text-4xl  font-medium">
 						menuju “herd immunity” covid-19
@@ -102,6 +113,10 @@ function App(props) {
 					</div>
 					<div className="text-center mx-auto ">
 						<p className="font-medium text-center text-gray-400 text-sm">
+							Note: Pengkalkulasian diambil dari (Total orang yang sembuh +
+							Jumlah orang yang sudah divaksinasi / Target vaksinasi) * 100%
+						</p>
+						<p className="font-medium text-center text-gray-400 text-sm">
 							Disclaimer: Data ini tidak 100% valid
 						</p>
 						<AnchorLink
@@ -118,7 +133,30 @@ function App(props) {
 				id="data"
 				className="bg-bg flex md:h-screen h-auto sm:py-20 flex-col"
 			>
-				<div className="container-small m-auto max-w-screen-lg  px-5  ">
+				<div className="container-small m-auto max-w-screen-lg  px-5">
+					<div className="mx-auto text-center  m-5  ">
+						<p className="font-semibold text-xl text-white">
+							Total Kasus covid-19 di Indonesia
+						</p>
+						<p
+							className="font-bold text-4xl my-2 "
+							style={{ color: '#C82C2C' }}
+						>
+							±{numberWithCommas(totalCase)}
+						</p>
+						<p className="text-gray-500">
+							sumber:{' '}
+							<a
+								href="https://github.com/mathdroid/covid-19-api"
+								className="font-semibold hover:underline"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Mathdroid covid-19 API
+							</a>{' '}
+							({moment(lastUpdate).format('YYYY/MM/d HH:mm')})
+						</p>
+					</div>
 					<div className="flex gap-6 flex-col  md:flex-row ">
 						<div
 							className="p-6 rounded-xl text-gray-200 flex-1 "
@@ -174,13 +212,13 @@ function App(props) {
 							<div className="grid grid-cols gap-4 px-6">
 								<div className="">
 									<p className="font-semibold text-xl text-white">
-										Total Kasus covid-19 di Indonesia
+										Total orang yang sembuh dari covid-19
 									</p>
 									<p
 										className="font-bold text-4xl my-2"
-										style={{ color: '#C82C2C' }}
+										style={{ color: '#2DCDE5' }}
 									>
-										{totalCase}
+										{numberWithCommas(recovered)}
 									</p>
 									<p className="text-gray-500">
 										sumber:{' '}
@@ -245,94 +283,35 @@ function App(props) {
 										sumber:{' '}
 										<a
 											className="font-semibold hover:underline"
-											href="https://twitter.com/KemenkesRI/status/1352621085393440771"
+											href="https://www.kemkes.go.id/"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
-											@KemenkesRI
+											Website Resmi Kemenkes
 										</a>
 									</p>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="mx-auto text-center m-10">
+					<div className="mx-auto text-center m-5">
 						<p className="font-semibold text-xl text-white">
 							Orang yang telah divaksinasi
 						</p>
 						<p className="font-bold text-4xl my-2" style={{ color: '#FFF' }}>
-							±{numberWithCommas(totalDistribusiVaksin)}
+							±{numberWithCommas(totalDivaksin)}
 						</p>
 						<p className="text-gray-500">
-							sumber: Diambil dari berbagai sumber
+							sumber:{' '}
+							<a
+								className="font-semibold hover:underline"
+								href="https://www.kemkes.go.id/"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Website Resmi Kemenkes (Last scraped: {dateDivaksin})
+							</a>
 						</p>
-					</div>
-				</div>
-				<div className="text-center mx-auto ">
-					<AnchorLink
-						className="text-lg font-bold "
-						href="#distribusi"
-						style={{ color: '#20BFA9' }}
-					>
-						Distribusi Vaksin
-					</AnchorLink>
-				</div>
-			</div>
-			<div
-				id="distribusi"
-				className="bg-bg flex  h-auto sm:py-20 py-10 flex-col min-h-screen "
-			>
-				<div className="container-small m-auto max-w-screen-lg  px-5">
-					<h1 className="font-bold text-2xl md:text-4xl text-gray-100 text-center">
-						Distribusi Vaksin
-					</h1>
-					<p className="text-center text-gray-300 font-medium text-lg mt-2">
-						Jumlah orang yang sudah divaksinasi di Indonesia (diambil dari
-						berbagai sumber)
-					</p>
-
-					<div className="flex flex-col mt-10">
-						{distribusiVax.map((vax, index) => (
-							<div className="p-1" key={vax.id}>
-								{index !== 0 && (
-									<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
-								)}
-								{index > 0 && (
-									<div
-										className="h-20 w-1 mx-auto rounded"
-										style={{ backgroundColor: '#232228' }}
-									/>
-								)}
-
-								<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
-								<p className="font-normal text-lg text-center text-gray-400 mt-2">
-									{moment(vax.tanggal).format('DD-MM-YYYY')}
-								</p>
-								<p className="font-semibold text-lg mt-2 text-center text-gray-200">
-									{vax.judul}
-								</p>
-
-								<p className="font-bold sm:text-6xl text-center text-white text-4xl">
-									{numberWithCommas(vax.jumlah)}
-								</p>
-								<p className="font-semibold text-lg mt-2 text-center text-gray-300">
-									{vax.deskripsi}
-								</p>
-
-								<p className="font-normal text-md text-center text-gray-500">
-									sumber:{' '}
-									<a
-										className="text-lg font-medium "
-										href={vax.link}
-										style={{ color: '#20BFA9' }}
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{vax.sumber}
-									</a>
-								</p>
-							</div>
-						))}
 					</div>
 				</div>
 				<div className="text-center mx-auto ">
@@ -345,6 +324,7 @@ function App(props) {
 					</AnchorLink>
 				</div>
 			</div>
+
 			<div
 				id="vaksin"
 				className="bg-bg flex  h-auto sm:py-20 py-10 flex-col min-h-screen "
@@ -381,6 +361,72 @@ function App(props) {
 								<p className="font-normal text-lg text-center text-gray-400 mt-2">
 									{moment(vax.tanggal).format('DD-MM-YYYY')}
 								</p>
+								<p className="font-normal text-md text-center text-gray-500">
+									sumber:{' '}
+									<a
+										className="text-lg font-medium "
+										href={vax.link}
+										style={{ color: '#20BFA9' }}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{vax.sumber}
+									</a>
+								</p>
+							</div>
+						))}
+					</div>
+				</div>
+				<div className="text-center mx-auto ">
+					<AnchorLink
+						className="text-lg font-bold "
+						href="#distribusi"
+						style={{ color: '#20BFA9' }}
+					>
+						Distribusi Vaksin
+					</AnchorLink>
+				</div>
+			</div>
+			<div
+				id="distribusi"
+				className="bg-bg flex  h-auto sm:py-20 py-10 flex-col min-h-screen "
+			>
+				<div className="container-small m-auto max-w-screen-lg  px-5">
+					<h1 className="font-bold text-2xl md:text-4xl text-gray-100 text-center">
+						Distribusi Vaksin
+					</h1>
+					<p className="text-center text-gray-300 font-medium text-lg mt-2">
+						Rencana indonesia dalam mendistribusikan vaksin covid-19
+					</p>
+
+					<div className="flex flex-col mt-10">
+						{distribusiVax.map((vax, index) => (
+							<div className="p-1" key={vax.id}>
+								{index !== 0 && (
+									<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
+								)}
+								{index > 0 && (
+									<div
+										className="h-20 w-1 mx-auto rounded"
+										style={{ backgroundColor: '#232228' }}
+									/>
+								)}
+
+								<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
+								<p className="font-normal text-lg text-center text-gray-400 mt-2">
+									{vax.bulan}
+								</p>
+								<p className="font-semibold text-lg mt-2 text-center text-gray-200">
+									{vax.judul}
+								</p>
+
+								<p className="font-bold sm:text-6xl text-center text-white text-4xl">
+									{numberWithCommas(vax.jumlah)}
+								</p>
+								<p className="font-semibold text-lg mt-2 text-center text-gray-300">
+									{vax.deskripsi}
+								</p>
+
 								<p className="font-normal text-md text-center text-gray-500">
 									sumber:{' '}
 									<a
@@ -491,13 +537,13 @@ function App(props) {
 							<thead>
 								<tr>
 									<th className=" text-semibold text-left py-4 whitespace-no-wrap border-b-2 border-gray-200 ">
-										Phase
+										Tahapan
 									</th>
 									<th className=" text-semibold text-left py-4 whitespace-no-wrap border-b-2 border-gray-200 ">
-										Developed by
+										Dibuat oleh
 									</th>
 									<th className="text-semibold text-left py-4 whitespace-no-wrap border-b-2 border-gray-200 ">
-										Type
+										Tipe Vaksin
 									</th>
 								</tr>
 							</thead>
