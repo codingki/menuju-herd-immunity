@@ -4,6 +4,8 @@ import moment from 'moment';
 import KandidatVaksin from './components/KandidatVaksin';
 import Phase from './components/Phase';
 var _ = require('lodash');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 function App(props) {
 	const [totalCase, setTotalCase] = useState(0);
@@ -25,7 +27,7 @@ function App(props) {
 	const populasiIndonesia = 271349889;
 	const targetVaksinasi = 181554465;
 
-	useEffect(() => {
+	useEffect(async () => {
 		fetch(`https://covid19.mathdro.id/api/countries/Indonesia`)
 			.then((res) => res.json())
 			.then((data) => {
@@ -37,7 +39,26 @@ function App(props) {
 				console.log(err);
 				setTotalCase('Error');
 			});
+		const item = await fetchHTML();
+		const divaksin = item.split('Divaksin:');
+		const clear = divaksin[1].replace('.', '');
+		const res = parseInt(clear);
+		console.log(res);
 	}, []);
+
+	async function fetchHTML() {
+		const cors = 'https://cors-anywhere.herokuapp.com/';
+		const { data } = await axios.get(cors + 'https://www.kemkes.go.id/');
+		const $ = cheerio.load(data);
+
+		const info = $('li.info-case')
+			.map((i, el) => {
+				let many = $(el).find('td');
+				return many.text();
+			})
+			.get(1);
+		return info;
+	}
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -134,8 +155,8 @@ function App(props) {
 								</a>
 							</p>
 							<p className="font-normal text-lg mt-2 leading-relaxed">
-								Indonesia menargetkan ±66,9% dari total populasi yaitu
-								181,554,465.
+								Indonesia sendiri menargetkan vaksinasi covid-19 ±66,9% dari
+								total populasi yaitu 181,554,465.
 							</p>
 							<p className="text-gray-400 mt-2 ">
 								sumber:{' '}
@@ -284,15 +305,20 @@ function App(props) {
 								)}
 
 								<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
-								<p className="font-semibold text-lg mt-2 text-center text-gray-200">
-									{vax.judul}
-								</p>
-								<p className="font-bold sm:text-6xl text-center text-white text-4xl">
-									{numberWithCommas(vax.jumlah)}
-								</p>
 								<p className="font-normal text-lg text-center text-gray-400 mt-2">
 									{moment(vax.tanggal).format('DD-MM-YYYY')}
 								</p>
+								<p className="font-semibold text-lg mt-2 text-center text-gray-200">
+									{vax.judul}
+								</p>
+
+								<p className="font-bold sm:text-6xl text-center text-white text-4xl">
+									{numberWithCommas(vax.jumlah)}
+								</p>
+								<p className="font-semibold text-lg mt-2 text-center text-gray-300">
+									{vax.deskripsi}
+								</p>
+
 								<p className="font-normal text-md text-center text-gray-500">
 									sumber:{' '}
 									<a
@@ -477,7 +503,7 @@ function App(props) {
 							</thead>
 							<tbody>
 								{kandidatVax.map((item) => (
-									<KandidatVaksin data={item} />
+									<KandidatVaksin key={item.id} data={item} />
 								))}
 							</tbody>
 						</table>

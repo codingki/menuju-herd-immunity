@@ -16,6 +16,7 @@ const VAKSINQUERY = `query VAKSINQUERY {
 		judul
 		jumlah
 		link
+		deskripsi
 		sumber
 		tanggal
 	  }

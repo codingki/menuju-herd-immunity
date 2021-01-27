@@ -9,6 +9,8 @@
 		"@testing-library/react": "^11.2.3",
 		"@testing-library/user-event": "^12.6.2",
 		"autoprefixer": "^9.8.6",
+		"axios": "^0.21.1",
+		"cheerio": "^1.0.0-rc.5",
 		"graphql-hooks": "^5.1.0",
 		"lodash": "^4.17.20",
 		"moment": "^2.29.1",
