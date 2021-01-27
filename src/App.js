@@ -4,8 +4,6 @@ import moment from 'moment';
 import KandidatVaksin from './components/KandidatVaksin';
 import Phase from './components/Phase';
 var _ = require('lodash');
-const axios = require('axios');
-const cheerio = require('cheerio');
 
 function App(props) {
 	const [totalCase, setTotalCase] = useState(0);
@@ -33,6 +31,11 @@ function App(props) {
 	const targetVaksinasi = 181554465;
 
 	useEffect(() => {
+		fetchCovidApi();
+		fetchFromKemkes();
+	}, []);
+
+	async function fetchCovidApi() {
 		fetch(`https://covid19.mathdro.id/api/countries/Indonesia`)
 			.then((res) => res.json())
 			.then((data) => {
@@ -45,30 +48,19 @@ function App(props) {
 				console.log(err);
 				setTotalCase('Error');
 			});
-
-		fetchFromKemkes();
-	}, []);
+	}
 
 	async function fetchFromKemkes() {
-		//const cors = 'https://cors-anywhere.herokuapp.com/';
-		const { data } = await axios.get('https://www.kemkes.go.id/');
-		const $ = cheerio.load(data);
-		let result = [];
-		const date = $('li.info-date').text();
-		const clearDate = date.split('Kondisi ');
-		setDateDivaksin(clearDate[1]);
-
-		const info = $('li.info-case')
-			.map((i, el) => {
-				let many = $(el).find('td');
-				return many.text();
+		fetch(`https://whispering-coast-92298.herokuapp.com/scrape`)
+			.then((res) => res.json())
+			.then((data) => {
+				setDateDivaksin(data.tanggal);
+				setTotalDivaksin(data.jumlahDivaksin);
 			})
-			.get(1);
-
-		const divaksin = info.split('Divaksin:');
-		const clear = divaksin[1].replace('.', '');
-		const res = parseInt(clear);
-		setTotalDivaksin(res);
+			.catch((err) => {
+				console.log(err);
+				setTotalCase('Error');
+			});
 	}
 
 	function numberWithCommas(x) {
@@ -112,11 +104,12 @@ function App(props) {
 						</div>
 					</div>
 					<div className="text-center mx-auto ">
-						<p className="font-medium text-center text-gray-400 text-sm">
-							Note: Pengkalkulasian diambil dari (Total orang yang sembuh +
-							Jumlah orang yang sudah divaksinasi / Target vaksinasi) * 100%
+						<p className="font-medium text-center text-gray-400 text-xs">
+							Note: Pengkalkulasian kasar ini diambil dari ((Total orang yang
+							sembuh + Jumlah orang yang sudah divaksinasi) / Target vaksinasi)
+							X 100%
 						</p>
-						<p className="font-medium text-center text-gray-400 text-sm">
+						<p className="font-medium text-center text-gray-400 text-sm mt-2">
 							Disclaimer: Data ini tidak 100% valid
 						</p>
 						<AnchorLink
@@ -129,11 +122,8 @@ function App(props) {
 					</div>
 				</div>
 			</div>
-			<div
-				id="data"
-				className="bg-bg flex md:h-screen h-auto sm:py-20 flex-col"
-			>
-				<div className="container-small m-auto max-w-screen-lg  px-5">
+			<div id="data" className="bg-bg flex min-h-screen h-auto  flex-col">
+				<div className="container m-auto max-w-screen-lg  px-5">
 					<div className="mx-auto text-center  m-5  ">
 						<p className="font-semibold text-xl text-white">
 							Total Kasus covid-19 di Indonesia
@@ -299,7 +289,10 @@ function App(props) {
 							Orang yang telah divaksinasi
 						</p>
 						<p className="font-bold text-4xl my-2" style={{ color: '#FFF' }}>
-							±{numberWithCommas(totalDivaksin)}
+							±
+							{totalDivaksin == 0
+								? 'Getting data..'
+								: numberWithCommas(totalDivaksin)}
 						</p>
 						<p className="text-gray-500">
 							sumber:{' '}
@@ -313,15 +306,15 @@ function App(props) {
 							</a>
 						</p>
 					</div>
-				</div>
-				<div className="text-center mx-auto ">
-					<AnchorLink
-						className="text-lg font-bold "
-						href="#vaksin"
-						style={{ color: '#20BFA9' }}
-					>
-						Ketersediaan Vaksin
-					</AnchorLink>
+					<div className="text-center mx-auto ">
+						<AnchorLink
+							className="text-lg font-bold "
+							href="#vaksin"
+							style={{ color: '#20BFA9' }}
+						>
+							Ketersediaan Vaksin
+						</AnchorLink>
+					</div>
 				</div>
 			</div>
 
@@ -555,15 +548,15 @@ function App(props) {
 						</table>
 					</div>
 				</div>
-				<div className="text-center mx-auto mt-10 ">
-					<AnchorLink
-						className="text-lg font-bold "
-						href="#home"
-						style={{ color: '#20BFA9' }}
-					>
-						Back to top
-					</AnchorLink>
-				</div>
+			</div>
+			<div className="text-center mx-auto p-5 bg-bg">
+				<AnchorLink
+					className="text-lg font-bold "
+					href="#home"
+					style={{ color: '#20BFA9' }}
+				>
+					Back to top
+				</AnchorLink>
 			</div>
 			<div
 				className="flex flex-col mx-auto p-5"
