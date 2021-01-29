@@ -13,6 +13,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "next": "10.0.5",
+    "next-absolute-url": "^1.2.2",
     "postcss": "^8.2.4",
     "puppeteer": "^5.5.0",
     "react": "17.0.1",

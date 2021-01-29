@@ -1,26 +1,32 @@
 import chrome from 'chrome-aws-lambda';
 import puppeteer from 'puppeteer';
+import absoluteUrl from 'next-absolute-url';
 
 const handler = async (req, res) => {
 	let browser = null;
-	// console.log(req.headers);
+	const { origin } = absoluteUrl(req);
+	const urlOrigin = `${origin}`;
+
 	try {
+		// Prod
+		const url = `${urlOrigin}/image`;
+
 		// Local
-		// const url = `${req.headers.host}/image`;
-		const url = `https://${req.headers.host}/image`;
+		// const url = `https://${req.headers.host}/image`;
 		browser = await chrome.puppeteer.launch({
 			// Local
-			args: [],
-			defaultViewport: chrome.defaultViewport,
-			executablePath: puppeteer.executablePath(),
-			headless: chrome.headless,
-			ignoreHTTPSErrors: true,
-			// Prod
-			// args: chrome.args,
+			// args: [],
 			// defaultViewport: chrome.defaultViewport,
-			// executablePath: await chrome.executablePath,
+			// executablePath: puppeteer.executablePath(),
 			// headless: chrome.headless,
-			// ignoreHTTPSErrors: chrome.headless,
+			// ignoreHTTPSErrors: true,
+
+			// Prod
+			args: chrome.args,
+			defaultViewport: chrome.defaultViewport,
+			executablePath: await chrome.executablePath,
+			headless: chrome.headless,
+			ignoreHTTPSErrors: chrome.headless,
 		});
 		const page = await browser.newPage();
 
