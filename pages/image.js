@@ -77,7 +77,7 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 				<div className="grid grid-cols gap-3">
 					<div className="">
 						<p className="font-semibold text-xl text-white">
-							Total orang yang sembuh dari covid-19
+							Total orang yang sembuh
 						</p>
 						<p className="font-bold text-4xl my-2" style={{ color: '#2DCDE5' }}>
 							{numberWithCommas(recovered)}
