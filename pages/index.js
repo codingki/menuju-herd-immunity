@@ -46,6 +46,11 @@ export default function Home({ allData, covidData, kemkesData }) {
 					name="description"
 					content="Seberapa jauh kita menuju herd immunity"
 				/>
+				<meta
+					name="viewport"
+					content="initial-scale=1.0, width=device-width"
+					key="viewport"
+				/>
 			</Head>
 			<div id="home" className="bg-bg flex h-screen flex-col ">
 				<div className="container max-w-screen-lg m-auto text-center px-5 md:px-20">
