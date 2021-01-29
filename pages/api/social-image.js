@@ -2,12 +2,6 @@ import chrome from 'chrome-aws-lambda';
 import puppeteer from 'puppeteer';
 import absoluteUrl from 'next-absolute-url';
 
-export const url = async (req, res) => {
-	const { origin } = absoluteUrl(req);
-	const urlOrigin = `${origin}`;
-	return urlOrigin;
-};
-
 const handler = async (req, res) => {
 	let browser = null;
 	const { origin } = absoluteUrl(req);

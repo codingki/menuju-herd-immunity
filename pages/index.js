@@ -5,8 +5,6 @@ import moment from 'moment';
 import KandidatVaksin from '../components/KandidatVaksin';
 import Phase from '../components/Phase';
 var _ = require('lodash');
-import absoluteUrl from 'next-absolute-url';
-import { url } from './api/social-image';
 
 export default function Home({ allData, covidData, kemkesData }) {
 	const dataVax = allData.allVaksins;
@@ -38,7 +36,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 		const percentage = totalImun / targetVaksinasi;
 		return percentage * 100;
 	}
-	const urlImage = `${url()}/api/image`;
+	const urlImage = `https://menuju-herd-immunity.vercel.app/api/image`;
 	return (
 		<>
 			<Head>
