@@ -5,7 +5,7 @@ import moment from 'moment';
 import KandidatVaksin from '../components/KandidatVaksin';
 import Phase from '../components/Phase';
 var _ = require('lodash');
-
+import absoluteUrl from 'next-absolute-url';
 export default function Home({ allData, covidData, kemkesData }) {
 	const dataVax = allData.allVaksins;
 	const distribusiVax = allData.allDistribusiVaksins;
@@ -36,7 +36,8 @@ export default function Home({ allData, covidData, kemkesData }) {
 		const percentage = totalImun / targetVaksinasi;
 		return percentage * 100;
 	}
-
+	const { origin } = absoluteUrl(req);
+	const url = `${origin}/api/image`;
 	return (
 		<>
 			<Head>
@@ -46,6 +47,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 					name="description"
 					content="Seberapa jauh kita menuju herd immunity"
 				/>
+				<meta property="og:image" content={url} />
 				<meta
 					name="viewport"
 					content="initial-scale=1.0, width=device-width"
