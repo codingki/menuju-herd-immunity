@@ -8,8 +8,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "autoprefixer": "^10.2.3",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
     "next": "10.0.5",
+    "postcss": "^8.2.4",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-anchor-link-smooth-scroll": "^1.0.12",
+    "react-dom": "17.0.1",
+    "tailwindcss": "^2.0.2"
   }
 }
