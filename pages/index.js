@@ -36,7 +36,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 		const percentage = totalImun / targetVaksinasi;
 		return percentage * 100;
 	}
-	const urlImage = `https://menuju-herd-immunity.vercel.app/api/image`;
+	const urlImage = `https://menuju-herd-immunity.vercel.app/api/social-image`;
 	return (
 		<>
 			<Head>
