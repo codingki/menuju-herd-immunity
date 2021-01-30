@@ -39,10 +39,7 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 		>
 			<div className="m-auto text-center p-5 h-auto w-auto">
 				<h1 className="text-gray-200 text-3xl  font-medium">Indonesia</h1>
-				<p
-					className="text-6xl font-bold m-1 md:m-3 "
-					style={{ color: '#20BFA9' }}
-				>
+				<p className="text-6xl font-bold m-1  " style={{ color: '#20BFA9' }}>
 					{totalDivaksin == 0 ? 'Calculating..' : countHI().toFixed(4) + ' %'}
 				</p>
 				<p className="text-gray-200 text-3xl font-medium">
@@ -63,13 +60,16 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 					</div>
 				</div>
 				<div className="text-center mx-auto ">
-					<p className="font-medium text-center text-gray-400 text-xs">
+					<p className="font-medium text-center text-gray-400 text-xs ">
 						Note: Pengkalkulasian kasar ini diambil dari ((Total orang yang
 						sembuh + Jumlah orang yang sudah divaksinasi) / Target vaksinasi) X
 						100%
 					</p>
 					<p className="font-medium text-center text-gray-400 text-sm mt-2">
 						Disclaimer: Data ini tidak 100% valid
+					</p>
+					<p className="font-medium text-center text-gray-400 text-sm mt-2">
+						{moment().format('D/MM/YYYY')}
 					</p>
 				</div>
 			</div>
