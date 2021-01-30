@@ -12,7 +12,7 @@ const handler = async (req, res) => {
 		const url = `${urlOrigin}/image`;
 
 		// Local
-		const url = `https://${req.headers.host}/image`;
+		// const url = `https://${req.headers.host}/image`;
 		browser = await chrome.puppeteer.launch({
 			// Local
 			// args: [],
