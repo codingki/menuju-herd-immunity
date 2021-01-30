@@ -44,9 +44,16 @@ export default function Home({ allData, covidData, kemkesData }) {
 				<title>Indonesia Menuju Herd Immunity</title>
 				<meta
 					name="description"
-					content="Seberapa jauh kita menuju herd immunity"
+					content="Seberapa jauh sih kita menuju herd immunity covid-19?"
 				/>
 				<meta property="og:image" content={urlImage} />
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content="Indonesia Menuju Herd Immunity" />
+				<meta name="twitter:image" content={urlImage} />
+				<meta
+					name="twitter:domain"
+					content="https://menuju-herd-immunity.vercel.app"
+				/>
 				<meta
 					name="viewport"
 					content="initial-scale=1.0, width=device-width"
@@ -527,24 +534,39 @@ export default function Home({ allData, covidData, kemkesData }) {
 					</div>
 				</div>
 			</div>
-			<div className="text-center mx-auto p-5 bg-bg">
-				<AnchorLink
-					className="text-lg font-bold "
-					href="#home"
-					style={{ color: '#20BFA9' }}
-				>
-					Back to top
-				</AnchorLink>
+			<div className=" bg-bg p-5">
+				<div className="max-w-screen-sm flex md:flex-row flex-col mx-auto gap-2">
+					<div className="text-center mx-auto  ">
+						<AnchorLink
+							className="text-lg font-bold "
+							href="#home"
+							style={{ color: '#20BFA9' }}
+						>
+							Kembali ke atas
+						</AnchorLink>
+					</div>
+					<div className="text-center mx-auto  ">
+						<a
+							className="text-lg font-bold "
+							href="https://twitter.com/intent/tweet?url=https://menuju-herd-immunity.vercel.app/&text=Seberapa jauh sih kita menuju herd immunity covid-19?"
+							target="_blank"
+							style={{ color: '#20BFA9' }}
+						>
+							Bagikan ini ke twitter
+						</a>
+					</div>
+				</div>
 			</div>
+
 			<div
-				className="flex flex-col mx-auto p-5"
+				className="  flex flex-col mx-auto p-5"
 				style={{ backgroundColor: '#1e1d20' }}
 			>
 				<p className="font-medium text-center text-gray-400">
 					Semua sumber sudah tertera
 				</p>
 				<p className="font-medium text-center text-gray-400">
-					Dibuat oleh{' '}
+					Dibuat & dikelola oleh{' '}
 					<a
 						className="font-medium text-center "
 						href="https://twitter.com/kikiding"
