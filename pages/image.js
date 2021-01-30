@@ -139,7 +139,7 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 	);
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	const allData = (await getAll()) || [];
 	const covidData = (await fetchCovidApi()) || [];
 	const kemkesData = (await fetchFromKemkes()) || [];
