@@ -69,7 +69,7 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 						Disclaimer: Data ini tidak 100% valid
 					</p>
 					<p className="font-medium text-center text-gray-400 text-sm mt-2">
-						{moment().format('D/MM/YYYY')}
+						({moment(lastUpdate).format('DD-MM-YYYY HH:mm')})
 					</p>
 				</div>
 			</div>

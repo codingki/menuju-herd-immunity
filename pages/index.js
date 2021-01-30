@@ -122,7 +122,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 							>
 								Mathdroid covid-19 API
 							</a>{' '}
-							({moment(lastUpdate).format('YYYY/MM/d HH:mm')})
+							({moment(lastUpdate).format('DD-MM-YYYY HH:mm')})
 						</p>
 					</div>
 					<div className="flex gap-6 flex-col  md:flex-row ">
@@ -434,7 +434,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 					</h1>
 					<p className="text-center text-gray-500 font-medium text-lg mt-2">
 						Dikumpulkan dari bing.com/covid (last update on{' '}
-						{moment(penelitianVax.lastUpdate).format('DD-MM -YYYY')})
+						{moment(penelitianVax.lastUpdate).format('DD-MM-YYYY')})
 					</p>
 					<div className="flex flex-row  my-10">
 						<Phase
@@ -497,7 +497,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 					</h1>
 					<p className="text-center text-gray-500 font-medium text-lg mt-2 mb-10">
 						Dikumpulkan dari bing.com/covid (last update on{' '}
-						{moment(penelitianVax.lastUpdate).format('DD-MM -YYYY')})
+						{moment(penelitianVax.lastUpdate).format('DD-MM-YYYY')})
 					</p>
 
 					<div
@@ -569,7 +569,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 	);
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	const allData = (await getAll()) || [];
 	const covidData = (await fetchCovidApi()) || [];
 	const kemkesData = (await fetchFromKemkes()) || [];
