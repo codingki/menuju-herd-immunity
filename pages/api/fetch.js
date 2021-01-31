@@ -1,5 +1,6 @@
 const API_URL = 'https://graphql.datocms.com';
 const API_TOKEN = process.env.DATOCMS_API_TOKEN;
+const prodUrl = 'https://menuju-herd-immunity.vercel.app/';
 
 async function fetchAPI(query) {
 	const res = await fetch(API_URL, {
@@ -34,9 +35,7 @@ export async function fetchCovidApi() {
 }
 
 export async function fetchFromKemkes() {
-	const res = await fetch(
-		`https://whispering-coast-92298.herokuapp.com/scrape`
-	);
+	const res = await fetch(`${prodUrl}/api`);
 
 	const json = await res.json();
 
