@@ -1,6 +1,7 @@
 # Indonesia Menuju Herd Immunity
 
 ![today](https://menujuherdimmunity.id/api/image)
+[menujuherdimmunity.id](https://menujuherdimmunity.id/)
 
 ## Pengkalkulasian
 
@@ -18,6 +19,7 @@ Pengkalkulasian kasar ini diambil dari (Total orang yang sembuh + Jumlah orang y
 - Next.js
 - Tailwindcss
 - Cheerio (scraping)
+- DATO CMS
 
 [Dukung di karyakarsa](https://karyakarsa.com/kikiding)
 [Reach me on twitter](https://twitter.com/kikiding)
