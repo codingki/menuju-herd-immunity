@@ -10,18 +10,7 @@ const handler = async (req, res) => {
 	try {
 		// Prod
 		const url = `${urlOrigin}/image`;
-
-		// Local
-		// const url = `https://${req.headers.host}/image`;
 		browser = await chrome.puppeteer.launch({
-			// Local
-			// args: [],
-			// defaultViewport: chrome.defaultViewport,
-			// executablePath: puppeteer.executablePath(),
-			// headless: chrome.headless,
-			// ignoreHTTPSErrors: true,
-
-			// Prod
 			args: chrome.args,
 			defaultViewport: chrome.defaultViewport,
 			executablePath: await chrome.executablePath,

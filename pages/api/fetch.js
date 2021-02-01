@@ -1,6 +1,6 @@
 const API_URL = 'https://graphql.datocms.com';
 const API_TOKEN = process.env.DATOCMS_API_TOKEN;
-const prodUrl = 'https://menuju-herd-immunity.vercel.app/';
+const prodUrl = 'https://menujuherdimmunity.id';
 
 async function fetchAPI(query) {
 	const res = await fetch(API_URL, {

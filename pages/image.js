@@ -4,19 +4,13 @@ import moment from 'moment';
 
 export default function SocialImage({ allData, covidData, kemkesData }) {
 	const dataVax = allData.allVaksins;
-	const distribusiVax = allData.allDistribusiVaksins;
-	const penelitianVax = allData.penelitianVaksin;
-	const kandidatVax = allData.allKandidatVaksins;
 
-	const totalCase = covidData.confirmed.value;
 	const recovered = covidData.recovered.value;
 	const lastUpdate = covidData.lastUpdate;
-	const countTotalCase = covidData.confirmed.value;
 
 	const dateDivaksin = kemkesData.tanggal;
 	const totalDivaksin = kemkesData.jumlahDivaksin;
 
-	const populasiIndonesia = 271349889;
 	const targetVaksinasi = 181554465;
 
 	const totalVaksin = _.sumBy(dataVax, function (o) {
@@ -43,7 +37,7 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 					{totalDivaksin == 0 ? 'Calculating..' : countHI().toFixed(4) + ' %'}
 				</p>
 				<p className="text-gray-200 text-3xl font-medium">
-					menuju “herd immunity” covid-19
+					menuju <i>herd immunity</i> covid-19
 				</p>
 				<div className="my-4 ">
 					<div
@@ -61,15 +55,16 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 				</div>
 				<div className="text-center mx-auto ">
 					<p className="font-medium text-center text-gray-400 text-xs ">
-						Note: Pengkalkulasian kasar ini diambil dari ((Total orang yang
+						Catatan: Pengkalkulasian kasar ini diambil dari ((Total orang yang
 						sembuh + Jumlah orang yang sudah divaksinasi) / Target vaksinasi) X
 						100%
 					</p>
-					<p className="font-medium text-center text-gray-400 text-sm mt-2">
-						Disclaimer: Data ini tidak 100% valid
+					<p className="font-sm text-center text-gray-400 text-xs my-2">
+						Disclaimer: Penentuan pengkalkulasian diambil tanpa dampingan ahli,
+						hanya berdasarkan riset.
 					</p>
 					<p className="font-medium text-center text-gray-400 text-sm mt-2">
-						{moment().format('DD-MM-YYYY')}
+						{moment().format('DD MMMM YYYY')}
 					</p>
 				</div>
 			</div>

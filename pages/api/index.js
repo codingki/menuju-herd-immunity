@@ -26,22 +26,12 @@ app.get('/api', (req, res) => {
 });
 
 async function fetchFromKemkes() {
-	//const cors = 'https://cors-anywhere.herokuapp.com/';
-
 	const { data } = await axios.get('https://www.kemkes.go.id/');
 	const $ = cheerio.load(data);
 	let result = [];
 	const date = $('li.info-date').text();
 	const clearDate = date.split('Kondisi ');
 
-	// const info = $('li.info-case')
-	// 	.map((i, el) => {
-	// 		let many = $(el).find('td');
-	// 		result.push(many.text());
-
-	// 		return many.text();
-	// 	})
-	// 	.get(1);
 	let jsonData = {};
 	let kasus = [];
 	let lastKey = '';
@@ -61,35 +51,12 @@ async function fetchFromKemkes() {
 			}
 			counter++;
 		});
-	// console.log(jsonData);
-	// console.log(kasus);
-	// console.log(info);
-	// const divaksin = info.split(':');
-	// console.log(divaksin);
-	// const clear = divaksin;
 
-	// const res = parseInt(clear);
 	const send = {
 		tanggal: clearDate[1],
 		jumlahDivaksin: jsonData['Vaksinasi-1'] + jsonData['Vaksinasi-2'],
 	};
 	return send;
 }
-// app.get('/api/scrape', (req, res) => {
-// 	request(
-// 		{ url: 'https://www.kemkes.go.id/' },
-// 		async (error, response, body) => {
-// 			if (error || response.statusCode !== 200) {
-// 				return res.status(500).json({ type: 'error', message: err.message });
-// 			}
-
-// 			res.json(await fetchFromKemkes());
-// 		}
-// 	);
-// });
 
 module.exports = app;
-
-// app.listen(PORT, () => {
-// 	console.log(PORT);
-// });

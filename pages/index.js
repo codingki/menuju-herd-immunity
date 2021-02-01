@@ -36,7 +36,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 		const percentage = totalImun / targetVaksinasi;
 		return percentage * 100;
 	}
-	const urlImage = `https://menuju-herd-immunity.vercel.app/api/image`;
+	const urlImage = `https://menujuherdimmunity.id/api/image`;
 	return (
 		<>
 			<Head>
@@ -50,10 +50,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta name="twitter:title" content="Indonesia Menuju Herd Immunity" />
 				<meta name="twitter:image" content={urlImage} />
-				<meta
-					name="twitter:domain"
-					content="https://menuju-herd-immunity.vercel.app"
-				/>
+				<meta name="twitter:domain" content="https://menujuherdimmunity.id" />
 				<meta
 					name="viewport"
 					content="initial-scale=1.0, width=device-width"
@@ -72,7 +69,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 						{totalDivaksin == 0 ? 'Calculating..' : countHI().toFixed(4) + ' %'}
 					</p>
 					<p className="text-gray-200 text-xl md:text-4xl  font-medium">
-						menuju “herd immunity” covid-19
+						menuju <i>herd immunity</i> covid-19
 					</p>
 					<div className="my-4 lg:my-10 ">
 						<div
@@ -89,13 +86,14 @@ export default function Home({ allData, covidData, kemkesData }) {
 						</div>
 					</div>
 					<div className="text-center mx-auto ">
-						<p className="font-medium text-center text-gray-400 text-xs">
-							Note: Pengkalkulasian kasar ini diambil dari ((Total orang yang
+						<p className="font-medium text-center text-gray-400 text-xs ">
+							Catatan: Pengkalkulasian kasar ini diambil dari ((Total orang yang
 							sembuh + Jumlah orang yang sudah divaksinasi) / Target vaksinasi)
 							X 100%
 						</p>
-						<p className="font-medium text-center text-gray-400 text-sm mt-2">
-							Disclaimer: Data ini tidak 100% valid
+						<p className="font-sm text-center text-gray-400 text-sm my-2">
+							Disclaimer: Penentuan pengkalkulasian diambil tanpa dampingan
+							ahli, hanya berdasarkan riset.
 						</p>
 						<AnchorLink
 							className="text-lg font-medium "
@@ -129,7 +127,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 							>
 								Mathdroid covid-19 API
 							</a>{' '}
-							({moment(lastUpdate).format('DD-MM-YYYY HH:mm')})
+							({moment(lastUpdate).format('DD MMM YYYY HH:mm')})
 						</p>
 					</div>
 					<div className="flex gap-6 flex-col  md:flex-row ">
@@ -205,7 +203,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 										>
 											Mathdroid covid-19 API
 										</a>{' '}
-										({moment(lastUpdate).format('YYYY/MM/d HH:mm')})
+										({moment(lastUpdate).format('DD MMM YYYY HH:mm')})
 									</p>
 								</div>
 								<div className="">
@@ -287,7 +285,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								Website Resmi Kemenkes (Last scraped: {dateDivaksin})
+								Website Resmi Kemenkes ({dateDivaksin})
 							</a>
 						</p>
 					</div>
@@ -337,7 +335,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 									{numberWithCommas(vax.jumlah)}
 								</p>
 								<p className="font-normal text-lg text-center text-gray-400 mt-2">
-									{moment(vax.tanggal).format('DD-MM-YYYY')}
+									{moment(vax.tanggal).format('DD MMMM YYYY')}
 								</p>
 								<p className="font-normal text-md text-center text-gray-500">
 									sumber:{' '}
@@ -440,8 +438,8 @@ export default function Home({ allData, covidData, kemkesData }) {
 						Penelitian Vaksin Dunia
 					</h1>
 					<p className="text-center text-gray-500 font-medium text-lg mt-2">
-						Dikumpulkan dari bing.com/covid (last update on{' '}
-						{moment(penelitianVax.lastUpdate).format('DD-MM-YYYY')})
+						Dikumpulkan dari bing.com/covid (terakhir diupdate pada{' '}
+						{moment(penelitianVax.lastUpdate).format('DD MMM YYYY')})
 					</p>
 					<div className="flex flex-row  my-10">
 						<Phase
@@ -503,8 +501,8 @@ export default function Home({ allData, covidData, kemkesData }) {
 						Kandidat Vaksin Teratas
 					</h1>
 					<p className="text-center text-gray-500 font-medium text-lg mt-2 mb-10">
-						Dikumpulkan dari bing.com/covid (last update on{' '}
-						{moment(penelitianVax.lastUpdate).format('DD-MM-YYYY')})
+						Dikumpulkan dari bing.com/covid (terakhir diupdate pada{' '}
+						{moment(penelitianVax.lastUpdate).format('DD MMM YYYY')})
 					</p>
 
 					<div
@@ -548,7 +546,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 					<div className="text-center mx-auto  ">
 						<a
 							className="text-lg font-bold "
-							href="https://twitter.com/intent/tweet?url=https://menuju-herd-immunity.vercel.app/&text=Seberapa jauh sih kita menuju herd immunity covid-19?"
+							href="https://twitter.com/intent/tweet?url=https://menujuherdimmunity.id/&text=Seberapa jauh sih kita menuju herd immunity covid-19?"
 							target="_blank"
 							style={{ color: '#20BFA9' }}
 						>
