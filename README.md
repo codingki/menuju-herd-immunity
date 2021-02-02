@@ -22,4 +22,5 @@ Pengkalkulasian kasar ini diambil dari (Total orang yang sembuh + Jumlah orang y
 - DATO CMS
 
 [Dukung di karyakarsa](https://karyakarsa.com/kikiding)
+
 [Reach me on twitter](https://twitter.com/kikiding)
