@@ -83,6 +83,12 @@ export async function getAll() {
             fase
             faseStatus
           }
+          allTahapanImunisasis(orderBy: _createdAt_ASC) {
+            tahap
+            id
+            dosis
+            bulan
+          }
     }
     `);
 	return data;

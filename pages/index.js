@@ -8,7 +8,7 @@ var _ = require('lodash');
 
 export default function Home({ allData, covidData, kemkesData }) {
 	const dataVax = allData.allVaksins;
-	const distribusiVax = allData.allDistribusiVaksins;
+	const distribusiVax = allData.allTahapanImunisasis;
 	const penelitianVax = allData.penelitianVaksin;
 	const kandidatVax = allData.allKandidatVaksins;
 
@@ -359,7 +359,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 						href="#distribusi"
 						style={{ color: '#20BFA9' }}
 					>
-						Distribusi Vaksin
+						Target Tahapan Vaksinasi COVID-19
 					</AnchorLink>
 				</div>
 			</div>
@@ -369,10 +369,24 @@ export default function Home({ allData, covidData, kemkesData }) {
 			>
 				<div className="container-small m-auto max-w-screen-lg  px-5">
 					<h1 className="font-bold text-2xl md:text-4xl text-gray-100 text-center">
-						Distribusi Vaksin
+						Target Tahapan Vaksinasi COVID-19
 					</h1>
 					<p className="text-center text-gray-300 font-medium text-lg mt-2">
-						Rencana indonesia dalam mendistribusikan vaksin covid-19
+						Pemerintah menargetkan vaksin COVID-19 tersedia secara bertahap
+						mempertimbangkan ketersediaan vaksin, tenaga kesehatan, serta sarana
+						dan prasarana kesehatan.
+					</p>
+					<p className="font-normal text-md text-center text-gray-500">
+						sumber:{' '}
+						<a
+							className="text-lg font-medium "
+							href="http://indonesiabaik.id/infografis/target-tahapan-vaksinasi-covid-19"
+							style={{ color: '#20BFA9' }}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							indonesiabaik.id
+						</a>
 					</p>
 
 					<div className="flex flex-col mt-10">
@@ -389,37 +403,27 @@ export default function Home({ allData, covidData, kemkesData }) {
 								)}
 
 								<div className="h-4 w-4 rounded-full w-1 mx-auto bg-gray-700" />
-								<p className="font-normal text-lg text-center text-gray-400 mt-2">
+								<p className="font-bold text-lg text-center text-white mt-2">
+									{vax.tahap}
+								</p>
+								<p className="font-normal text-lg text-center text-gray-400 ">
 									{vax.bulan}
 								</p>
-								<p className="font-semibold text-lg mt-2 text-center text-gray-200">
+								<p className="font-semibold text-lg text-center text-gray-200">
 									{vax.judul}
 								</p>
 
 								<p className="font-bold sm:text-6xl text-center text-white text-4xl">
-									{numberWithCommas(vax.jumlah)}
+									{numberWithCommas(vax.dosis)}
 								</p>
-								<p className="font-semibold text-lg mt-2 text-center text-gray-300">
-									{vax.deskripsi}
-								</p>
-
-								<p className="font-normal text-md text-center text-gray-500">
-									sumber:{' '}
-									<a
-										className="text-lg font-medium "
-										href={vax.link}
-										style={{ color: '#20BFA9' }}
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{vax.sumber}
-									</a>
+								<p className="font-semibold text-lg  text-center text-gray-300">
+									Dosis
 								</p>
 							</div>
 						))}
 					</div>
 				</div>
-				<div className="text-center mx-auto ">
+				<div className="text-center mx-auto mt-6 ">
 					<AnchorLink
 						className="text-lg font-bold "
 						href="#penelitian"
