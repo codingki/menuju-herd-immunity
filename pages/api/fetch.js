@@ -93,3 +93,39 @@ export async function getAll() {
     `);
 	return data;
 }
+
+export async function getPenilitian() {
+	const data = fetchAPI(`
+     {
+       
+          penelitianVaksin {
+            limitedApproval
+            phase1
+            phase2
+            phase3
+            preclinical
+            approved
+            lastUpdate
+          }
+       
+    }
+    `);
+	return data;
+}
+
+export async function getKandidat() {
+	const data = fetchAPI(`
+     {
+       
+          allKandidatVaksins(orderBy: faseStatus_DESC) {
+            id
+            tipeVaksin
+            dibuatOleh
+            fase
+            faseStatus
+          }
+         
+    }
+    `);
+	return data;
+}
