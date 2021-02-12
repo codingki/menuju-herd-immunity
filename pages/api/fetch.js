@@ -97,7 +97,7 @@ export async function getAll() {
 export async function getPenilitian() {
 	const data = fetchAPI(`
      {
-       
+
           penelitianVaksin {
             limitedApproval
             phase1
@@ -107,7 +107,7 @@ export async function getPenilitian() {
             approved
             lastUpdate
           }
-       
+
     }
     `);
 	return data;
@@ -116,7 +116,7 @@ export async function getPenilitian() {
 export async function getKandidat() {
 	const data = fetchAPI(`
      {
-       
+
           allKandidatVaksins(orderBy: faseStatus_DESC) {
             id
             tipeVaksin
@@ -124,7 +124,15 @@ export async function getKandidat() {
             fase
             faseStatus
           }
-         
+          penelitianVaksin {
+            limitedApproval
+            phase1
+            phase2
+            phase3
+            preclinical
+            approved
+            lastUpdate
+          }
     }
     `);
 	return data;
