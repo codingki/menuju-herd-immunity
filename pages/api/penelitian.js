@@ -2,7 +2,7 @@ import { getPenilitian } from './fetch';
 import Cors from 'cors';
 const cors = Cors({
 	methods: ['GET', 'HEAD'],
-	origin: '*',
+	origin: ['https://kawalcovid19.id', 'https://menujuherdimmunity.id'],
 });
 
 function runMiddleware(req, res, fn) {

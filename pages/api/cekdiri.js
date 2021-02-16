@@ -2,7 +2,7 @@ import { fetchVaksinasiCekdiri } from './fetch';
 import Cors from 'cors';
 const cors = Cors({
 	methods: ['GET', 'HEAD'],
-	origin: '*',
+	origin: ['https://kawalcovid19.id', 'https://menujuherdimmunity.id'],
 });
 
 function runMiddleware(req, res, fn) {
@@ -11,7 +11,6 @@ function runMiddleware(req, res, fn) {
 			if (result instanceof Error) {
 				return reject(result);
 			}
-
 			return resolve(result);
 		});
 	});
