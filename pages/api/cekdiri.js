@@ -21,6 +21,7 @@ export default async function handler(req, res) {
 	const allData = (await fetchVaksinasiCekdiri()) || [];
 	const data = {
 		latest: allData.monitoring[allData.monitoring.length - 1],
+		populasiIndonesia: 271349889,
 		lastUpdate: allData.last_updated,
 	};
 	await runMiddleware(req, res, cors);
