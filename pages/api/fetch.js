@@ -34,6 +34,18 @@ export async function fetchCovidApi() {
 	return json;
 }
 
+export async function fetchCekDiri() {
+	const res = await fetch(`https://menujuherdimmunity/api/cekdiri`);
+
+	const json = await res.json();
+
+	if (json.errors) {
+		console.error(json.errors);
+		throw new Error('Failed to fetch Covid API');
+	}
+	return json;
+}
+
 export async function fetchVaksinasiCekdiri() {
 	const res = await fetch(`https://cekdiri.id/vaksinasi/`);
 

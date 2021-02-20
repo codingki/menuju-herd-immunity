@@ -1,5 +1,10 @@
 import Head from 'next/head';
-import { getAll, fetchCovidApi, fetchFromKemkes } from './api/fetch';
+import {
+	getAll,
+	fetchCovidApi,
+	fetchFromKemkes,
+	fetchCekDiri,
+} from './api/fetch';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import moment from 'moment';
 import KandidatVaksin from '../components/KandidatVaksin';
@@ -15,13 +20,12 @@ export default function Home({ allData, covidData, kemkesData }) {
 	const totalCase = covidData.confirmed.value;
 	const recovered = covidData.recovered.value;
 	const lastUpdate = covidData.lastUpdate;
-	const countTotalCase = covidData.confirmed.value;
 
-	const dateDivaksin = kemkesData.tanggal;
-	const totalDivaksin = kemkesData.jumlahDivaksin;
+	const dateDivaksin = kemkesData.lastUpdate;
+	const totalDivaksin = kemkesData.latest.vaksinasi2;
 
-	const populasiIndonesia = 271349889;
-	const targetVaksinasi = 181554465;
+	const populasiIndonesia = kemkesData.populasiIndonesia;
+	const targetVaksinasi = kemkesData.latest.total_sasaran_vaksinasi;
 
 	const totalVaksin = _.sumBy(dataVax, function (o) {
 		return o.jumlah;
@@ -88,8 +92,8 @@ export default function Home({ allData, covidData, kemkesData }) {
 					<div className="text-center mx-auto ">
 						<p className="font-medium text-center text-gray-400 text-xs ">
 							Catatan: Pengkalkulasian kasar ini diambil dari ((Total orang yang
-							sembuh + Jumlah orang yang sudah divaksinasi) / Target vaksinasi)
-							X 100%
+							sembuh + Jumlah orang yang sudah menerima vaksin dosis 2) / Target
+							vaksinasi) X 100%
 						</p>
 						<p className="font-sm text-center text-gray-400 text-sm my-2">
 							Disclaimer: Penentuan pengkalkulasian diambil tanpa dampingan
@@ -269,7 +273,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 					</div>
 					<div className="mx-auto text-center m-5">
 						<p className="font-semibold text-xl text-white">
-							Orang yang telah divaksinasi
+							Orang yang telah divaksinasi(2 Dosis)
 						</p>
 						<p className="font-bold text-4xl my-2" style={{ color: '#FFF' }}>
 							±
@@ -285,7 +289,8 @@ export default function Home({ allData, covidData, kemkesData }) {
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								Website Resmi Kemenkes ({dateDivaksin})
+								Website Resmi Kemenkes (
+								{moment(dateDivaksin).format('DD MMM YYYY HH:mm')})
 							</a>
 						</p>
 					</div>
@@ -596,7 +601,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 export async function getServerSideProps() {
 	const allData = (await getAll()) || [];
 	const covidData = (await fetchCovidApi()) || [];
-	const kemkesData = (await fetchFromKemkes()) || [];
+	const kemkesData = (await fetchCekDiri()) || [];
 
 	return {
 		props: { allData, covidData, kemkesData },
