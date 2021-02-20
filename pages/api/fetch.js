@@ -35,7 +35,7 @@ export async function fetchCovidApi() {
 }
 
 export async function fetchCekDiri() {
-	const res = await fetch(`https://menujuherdimmunity/api/cekdiri`);
+	const res = await fetch(`https://menujuherdimmunity.id/api/cekdiri`);
 
 	const json = await res.json();
 
