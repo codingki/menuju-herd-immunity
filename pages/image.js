@@ -1,4 +1,9 @@
-import { getAll, fetchCovidApi, fetchFromKemkes } from './api/fetch';
+import {
+	getAll,
+	fetchCovidApi,
+	fetchFromKemkes,
+	fetchCekDiri,
+} from './api/fetch';
 var _ = require('lodash');
 import moment from 'moment';
 
@@ -8,8 +13,8 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 	const recovered = covidData.recovered.value;
 	const lastUpdate = covidData.lastUpdate;
 
-	const dateDivaksin = kemkesData.tanggal;
-	const totalDivaksin = kemkesData.jumlahDivaksin;
+	const dateDivaksin = kemkesData.lastUpdate;
+	const totalDivaksin = kemkesData.latest.vaksinasi2;
 
 	const targetVaksinasi = 181554465;
 
@@ -56,8 +61,8 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 				<div className="text-center mx-auto ">
 					<p className="font-medium text-center text-gray-400 text-xs ">
 						Catatan: Pengkalkulasian kasar ini diambil dari ((Total orang yang
-						sembuh + Jumlah orang yang sudah divaksinasi) / Target vaksinasi) X
-						100%
+						sembuh + Jumlah orang yang sudah menerima vaksin dosis 2) / Target
+						vaksinasi) X 100%
 					</p>
 					<p className="font-sm text-center text-gray-400 text-xs my-2">
 						Disclaimer: Penentuan pengkalkulasian diambil tanpa dampingan ahli,
@@ -137,7 +142,7 @@ export default function SocialImage({ allData, covidData, kemkesData }) {
 export async function getServerSideProps() {
 	const allData = (await getAll()) || [];
 	const covidData = (await fetchCovidApi()) || [];
-	const kemkesData = (await fetchFromKemkes()) || [];
+	const kemkesData = (await fetchCekDiri()) || [];
 
 	return {
 		props: { allData, covidData, kemkesData },
