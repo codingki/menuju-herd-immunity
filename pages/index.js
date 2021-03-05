@@ -298,16 +298,16 @@ export default function Home({ allData, covidData, kemkesData }) {
 					<div className="text-center mx-auto ">
 						<AnchorLink
 							className="text-lg font-bold "
-							href="#vaksin"
+							href="#distribusi"
 							style={{ color: '#20BFA9' }}
 						>
-							Ketersediaan Vaksin
+							Target Tahapan Vaksinasi COVID-19
 						</AnchorLink>
 					</div>
 				</div>
 			</div>
 
-			<div
+			{/* <div
 				id="vaksin"
 				className="bg-bg flex  h-auto sm:py-20 py-10 flex-col min-h-screen "
 			>
@@ -368,7 +368,7 @@ export default function Home({ allData, covidData, kemkesData }) {
 						Target Tahapan Vaksinasi COVID-19
 					</AnchorLink>
 				</div>
-			</div>
+			</div> */}
 			<div
 				id="distribusi"
 				className="bg-bg flex  h-auto sm:py-20 py-10 flex-col min-h-screen "
