@@ -25,7 +25,8 @@ export default function Home({ allData, covidData, kemkesData }) {
 	const totalDivaksin = kemkesData.latest.vaksinasi2;
 
 	const populasiIndonesia = kemkesData.populasiIndonesia;
-	const targetVaksinasi = kemkesData.latest.total_sasaran_vaksinasi;
+	const targetVaksinasi = 181554465;
+	// const targetVaksinasi = kemkesData.latest.total_sasaran_vaksinasi;
 
 	const totalVaksin = _.sumBy(dataVax, function (o) {
 		return o.jumlah;
